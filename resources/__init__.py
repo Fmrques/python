@@ -1,0 +1,1 @@
+#o init.py serve para conseguirmos 'inicializar' o pacote. Ele permite utilizar o from xxxx import yyyy
