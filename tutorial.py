@@ -36,3 +36,6 @@
         #return None
 #A função find hotel acima deixou de ser usada pois ela estava conectada com a lista de hoteis criada dentro do post.
 #Como passamos a utilizar o banco de dados SQL, ela n faz mais sentido permanecer no código.
+
+#Como importar os projetos para o GitHub:
+#acessar - https://www.youtube.com/watch?v=peGUkhXD3Vw
