@@ -31,8 +31,10 @@ class User(Resource):
  
   
     @jwt_required()   
-    def delete(self, hotel_id):
+    def delete(self, user_id):
+
         user = UserModel.find_user(user_id)
+
         if user:
             try:
                 user.delete_user()
