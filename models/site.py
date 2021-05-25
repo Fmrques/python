@@ -8,6 +8,7 @@ class SiteModel(banco.Model):
 
     site_id = banco.Column(banco.Integer, primary_key=True)
     url = banco.Column(banco.String(80))
+    hoteis = banco.relationship('HotelModel')
     
 
     def __init__(self, url):
@@ -18,31 +19,37 @@ class SiteModel(banco.Model):
         return {
             'site_id': self.site_id,
             'url': self.url,
-            'hoteis' :[]
+            'hoteis' :[hotel.json() for hotel in self.hoteis]
             
         }
 
 
     @classmethod
-    def find_hotel(cls, hotel_id): #o parâmetro cls indica que é uma função da classe
+    def find_site(cls, url): #o parâmetro cls indica que é uma função da classe
         #cls  = mesma coisa que estiver escrevendo HotelModel
-        hotel = cls.query.filter_by(hotel_id=hotel_id).first()   #SELECT * FROM hoteis WHERE hotel_id = $hotel_id
-        if hotel:
-            return hotel
+        site = cls.query.filter_by(url=url).first()   #SELECT * FROM hoteis WHERE hotel_id = $hotel_id
+        if site:
+            return site
+        return None
+
+    @classmethod
+    def find_by_id(cls, site_id): #o parâmetro cls indica que é uma função da classe
+        #cls  = mesma coisa que estiver escrevendo HotelModel
+        site = cls.query.filter_by(site_id=site_id).first()   #SELECT * FROM hoteis WHERE hotel_id = $hotel_id
+        if site:
+            return site
         return None
 
     
-    def save_hotel(self):
+    def save_site(self):
         banco.session.add(self) #session meio que vai acionar os dados
         banco.session.commit()
     
-    def delete_hotel(self):
+    def delete_site(self):
+        [hotel.delete_hotel() for hotel in self.hoteis]
+
         banco.session.delete(self)
         banco.session.commit()
 
-    def update_hotel(self, nome, estrelas, diaria, cidade):
-        self.nome = nome
-        self.estrelas = estrelas
-        self.diaria = diaria
-        self.cidade = cidade
+    
 
